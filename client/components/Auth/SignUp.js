@@ -21,6 +21,14 @@ function SignUp() {
           setUser({ ...user, lastName: e.target.value });
         }}
       />
+
+      <input
+        type="text"
+        placeholder="Username"
+        onChange={(e) => {
+          setUser({ ...user, userName: e.target.value });
+        }}
+      />
       <input
         type="text"
         placeholder="Password"

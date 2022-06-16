@@ -10,7 +10,7 @@ function LogIn() {
         type="text"
         placeholder="Username"
         onChange={(e) => {
-          setUser({ ...user, username: e.target.value });
+          setUser({ ...user, userName: e.target.value });
         }}
       />
 
