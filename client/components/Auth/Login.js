@@ -1,8 +1,24 @@
 import React, { useState } from 'react';
+import fetcher from '../../lib/fetcher.js';
 
-function LogIn() {
+import Cookies from 'universal-cookie';
+
+function LogIn({ setIsAuth }) {
+  const cookies = new Cookies();
   const [user, setUser] = useState({});
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await fetcher('/Api/Auth/login', user);
+    if (result) {
+      cookies.set('firstName', result.firstName);
+      cookies.set('userName', result.userName);
+      cookies.set('lastName', result.lastName);
+      cookies.set('userId', result.userId);
+      cookies.set('token', result.token);
+      cookies.set('hashedPassword', result.password);
+      setIsAuth(true);
+    }
+  };
   return (
     <div className="signUp">
       <label> Login</label>

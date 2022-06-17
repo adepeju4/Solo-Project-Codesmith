@@ -9,7 +9,7 @@ router.post('/signup', AuthController.SignUp, (req, res) => {
 
 // TODO: complete this with the right user object
 router.post('/login', AuthController.Login, (req, res) => {
-  return res.status(200).send('pending');
+  return res.status(200).json(res.locals.user);
 });
 
 export default router;
