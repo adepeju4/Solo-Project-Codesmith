@@ -5,6 +5,8 @@ import Login from './Auth/Login.js';
 import '../scss/global.scss';
 import { StreamChat } from 'stream-chat';
 import Cookies from 'universal-cookie';
+import JoinGame from './JoinGame.js';
+import { Chat } from 'stream-chat-react';
 
 function App() {
   const cookies = new Cookies();
@@ -27,7 +29,6 @@ function App() {
         token
       )
       .then((user) => {
-        process.env.NODE_ENV === 'development' && console.log(user);
         setIsAuth(true);
       });
   }
@@ -45,7 +46,12 @@ function App() {
   return (
     <div className="App">
       {isAuth ? (
-        <button onClick={handleLogOut}>Log out</button>
+        <Chat client={client}>
+          <>
+            <JoinGame />
+            <button onClick={handleLogOut}>Log out</button>
+          </>
+        </Chat>
       ) : (
         <>
           <SignUp setIsAuth={setIsAuth} />

@@ -57,7 +57,7 @@ export default {
     //the server by default does not respond to 8080
     proxy: {
       '/Api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:8080',
         router: () => 'http://localhost:3000',
         logLevel: 'debug',
       },
