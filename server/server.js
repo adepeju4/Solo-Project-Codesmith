@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
-import allRoutes from '../routes/index.js';
+import router from '../routes/index.js';
 import startDB from '../database/db.js';
 
 const app = express();
@@ -20,13 +20,13 @@ process.env.NODE_ENV === 'production' &&
     express.static(path.join(path.dirname(__filename), '../build'))
   );
 
-app.use('/api', allRoutes.AuthRoute);
-
 app.get('/', (req, res) => {
   return res
     .status(200)
     .sendFile(path.join(path.dirname(__filename), '../index.html'));
 });
+
+app.use('/Api', router);
 
 // Unknown route handler
 app.use((req, res) => res.sendStatus(404));
