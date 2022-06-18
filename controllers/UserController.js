@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// TODO: Clear token at specific time
 const AuthController = {
   SignUp: async function (req, res, next) {
     try {
@@ -49,7 +48,6 @@ const AuthController = {
     }
   },
 
-  //TODO: complete authentication
   Login: async function (req, res, next) {
     try {
       const { userName, password } = req.body;

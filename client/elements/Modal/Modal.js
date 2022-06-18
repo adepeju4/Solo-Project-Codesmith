@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import ModalContent from './ModalContent.js';
 
 function Modal({ ...props }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(props.dispatch ? true : false);
 
   return (
     <>
@@ -16,14 +16,16 @@ function Modal({ ...props }) {
           })}
       </AnimatePresence>
 
-      <button
-        className="openModalBtn"
-        onClick={() => {
-          setModalOpen(true);
-        }}
-      >
-        Open
-      </button>
+      {!props.dispatch && (
+        <button
+          className="openModalBtn"
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          Open
+        </button>
+      )}
     </>
   );
 }
