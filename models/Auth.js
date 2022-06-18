@@ -14,8 +14,17 @@ const userSchema = new Schema({
   userName: {
     type: 'string',
     required: true,
+    unique: true,
   },
   password: {
+    type: 'string',
+    required: true,
+  },
+  token: {
+    type: 'string',
+    required: true,
+  },
+  userId: {
     type: 'string',
     required: true,
   },
