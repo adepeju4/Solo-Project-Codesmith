@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import fetcher from '../../lib/fetcher.js';
 import { useDispatchComp } from '../../lib/hooks.js';
 import Modal from '../../elements/Modal/Modal.js';
 import Cookies from 'universal-cookie';
 
-function SignUp({ setIsAuth }) {
+function SignUp({ setIsAuth, setMode }) {
   const cookies = new Cookies();
   const [user, setUser] = useState({});
   const [error, setError] = useState(false);
@@ -33,7 +33,7 @@ function SignUp({ setIsAuth }) {
     setError(true);
   };
   return (
-    <div className="signUp">
+    <div className="signup">
       <label> Sign Up</label>
       <input
         type="text"
@@ -59,13 +59,19 @@ function SignUp({ setIsAuth }) {
         }}
       />
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         onChange={(e) => {
           setUser({ ...user, password: e.target.value });
         }}
       />
-
+      <div
+        onClick={() => {
+          setMode('login');
+        }}
+      >
+        Already signed up? Log in
+      </div>
       <button type="submit" onClick={handleSubmit}>
         Sign Up
       </button>

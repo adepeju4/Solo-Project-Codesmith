@@ -15,7 +15,7 @@ function TicTacToe({ channel }) {
   }
   return (
     <div className="gameContainer">
-      <Board />
+      <Board channel={channel} />
       {/* TODO: CHAT*/}
       {/* {LEAVE GAME BTN} */}
     </div>

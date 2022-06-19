@@ -7,6 +7,10 @@ import { StreamChat } from 'stream-chat';
 import Cookies from 'universal-cookie';
 import JoinGame from './JoinGame.js';
 import { Chat } from 'stream-chat-react';
+import Star from '../assets/bigStar.svg';
+import rocket1 from '../assets/6-removebg-preview 1.svg';
+import rocket2 from '../assets/5-removebg-preview 1.svg';
+import smallStar from '../assets/smallStar1.svg';
 
 function App() {
   const cookies = new Cookies();
@@ -15,6 +19,7 @@ function App() {
   const token = cookies.get('token');
 
   const [isAuth, setIsAuth] = useState(false);
+  const [mode, setMode] = useState('signup');
 
   if (token) {
     client
@@ -33,6 +38,31 @@ function App() {
       });
   }
 
+  const bigStars = [
+    <img src={Star} key={1} />,
+    <img src={Star} key={2} />,
+    <img src={Star} key={3} />,
+  ];
+
+  const rockets = [
+    <img className="rocket-left" src={rocket1} key={1} />,
+    <img className="rocket-right" src={rocket2} key={2} />,
+  ];
+
+  const shootingStars = [
+    <section>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </section>,
+  ];
+
   const handleLogOut = () => {
     cookies.remove('userId');
     cookies.remove('userName');
@@ -45,19 +75,30 @@ function App() {
   };
   return (
     <div className="App">
-      {isAuth ? (
-        <Chat client={client}>
-          <>
-            <JoinGame />
-            <button onClick={handleLogOut}>Log out</button>
-          </>
-        </Chat>
-      ) : (
-        <>
-          <SignUp setIsAuth={setIsAuth} />
-          <Login setIsAuth={setIsAuth} />
-        </>
-      )}
+      <>
+        {isAuth ? (
+          <Chat client={client}>
+            <>
+              <JoinGame />
+              <button onClick={handleLogOut}>Log out</button>
+            </>
+          </Chat>
+        ) : (
+          <div className="authContainer">
+            <div className="gameName">
+              <div>Games FM</div>
+              {bigStars}
+            </div>
+            {mode === 'signup' ? (
+              <SignUp setIsAuth={setIsAuth} setMode={setMode} />
+            ) : (
+              <Login setIsAuth={setIsAuth} setMode={setMode} />
+            )}
+            {rockets}
+          </div>
+        )}
+        {shootingStars}
+      </>
     </div>
   );
 }
