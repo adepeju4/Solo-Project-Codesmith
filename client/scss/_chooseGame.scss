@@ -1,0 +1,84 @@
+.selectGame_wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  position: absolute;
+  top: 5rem;
+}
+.selectGame_header {
+  display: flex;
+
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+
+  .selectgame-title {
+    font-size: 3rem;
+    border-bottom: 0.5rem solid #ffa800;
+  }
+
+  .gamePoints {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    position: relative;
+  }
+
+  .gamePoints img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .gamePoints p {
+    font-size: 1.5rem;
+    background-color: #451cbb;
+    padding: 0 3rem;
+    border-radius: 4rem;
+    position: absolute;
+    left: 26px;
+    bottom: 0rem;
+  }
+}
+
+.gameList {
+  display: flex;
+  flex-flow: column wrap;
+
+  width: 90%;
+
+  .gameSelector {
+    margin-bottom: 3rem;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: 'flex-start';
+    align-items: center;
+    width: fit-content;
+    width: -moz-fit-content;
+    position: relative;
+  }
+  .game_img {
+    border-radius: 50%;
+    width: 10rem;
+
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+  .game_title {
+    font-size: 2rem;
+    width: 15rem;
+    border-radius: 25px;
+    padding: 1rem 1rem 1rem 4rem;
+    position: absolute;
+    left: 11.5rem;
+  }
+}

@@ -56,7 +56,7 @@ function LogIn({ setIsAuth, setMode }) {
         <p className="inputError">Password not provided</p>
       )}
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         onChange={(e) => {
           setUser({ ...user, password: e.target.value });

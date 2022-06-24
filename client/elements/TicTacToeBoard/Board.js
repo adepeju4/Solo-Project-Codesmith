@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { get } from 'mongoose';
+import React, { useState, useRef, useEffect } from 'react';
 import { useChatContext } from 'stream-chat-react';
+
 import Modal from '../Modal/Modal.js';
 import Row from './Row.js';
 
@@ -39,15 +41,18 @@ function checkWin(rows) {
   );
 }
 
-let called = false;
-
 const nextMove = { X: 'O', O: 'X' };
 
 function Board({ channel }) {
-  const [board, setBoard] = useState(getInitState());
+  let board = getInitState();
+  const [won, setwon] = useState(false);
   const [dispatch, setdispatch] = useState(false);
-  const { rows } = board;
+  let { rows } = board;
   const { client } = useChatContext();
+
+  const [squares, setSquares] = useState([]);
+
+  const values = useRef();
 
   const callModal = (won) => {
     const modalProps = {
@@ -63,85 +68,125 @@ function Board({ channel }) {
     let { turn, winner, player } = board;
 
     const squareInQuestion = rows[row][square];
+
     if (turn !== player) return;
 
     if (board.winner) return;
+
     if (squareInQuestion) return;
 
     turn = turn === 'X' ? 'O' : 'X';
+    values.current.childNodes[row].childNodes[square].innerText =
+      nextMove[turn];
     rows[row][square] = nextMove[turn];
 
     winner = checkWin(rows);
 
-    if (winner) setdispatch(true);
+    if (winner) {
+      setwon(true);
+      setdispatch(true);
+      console.log(client.user.name, 'won!', dispatch);
+      resetBoard();
+    }
 
-    setBoard({
-      rows,
-      turn,
-      winner,
-      player,
-    });
+    board = { ...board, turn, winner, player };
 
     channel.sendEvent({
       type: 'move',
       data: {
-        board: {
-          rows,
-          turn,
-          winner,
-        },
+        row: [row, square],
+        value: nextMove[turn],
+        turn,
+        winner,
         player,
       },
     });
   };
 
-  const callBoard = (boardd, player) => {
-    if (boardd.winner) {
-      setdispatch(true);
-    } else {
-      setBoard({ ...boardd, player: player === 'X' ? 'O' : 'X' });
-    }
-    called = false;
+  useEffect(() => {
+    console.log(dispatch);
+  }, [dispatch]);
+
+  const getSquares = (vals) => {
+    return vals.map((text, index) => {
+      return (
+        <Row
+          row={index}
+          chooseSquare={handleClick}
+          columns={text}
+          key={`rowKey${index}xx`}
+        />
+      );
+    });
   };
 
-  // Peju1234 MattBucks
+  const callValues = (position, value) => {
+    if (values.current) {
+      values.current.childNodes[position[0]].childNodes[position[1]].innerHTML =
+        value;
+      board.rows[position[0]][position[1]] = value;
+    }
+  };
+
+  const resetBoard = () => {
+    if (values.current) {
+      board = getInitState();
+      for (let i = 0; i < board.rows.length; i++) {
+        for (let j = 0; j < board.rows.length; j++) {
+          values.current.childNodes[i].childNodes[j].innerHTML = '';
+          rows[i][j] = '';
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    setSquares(getSquares(rows));
+  }, []);
 
   channel.on((event) => {
     if (event.type === 'move' && event.user.id !== client.userID) {
-      if (!called) {
-        callBoard(event.data.board, event.data.player);
+      if (event.data.reset) {
+        resetBoard();
+      } else {
+        if (event.data.winner) {
+          resetBoard();
+          setwon(false);
+          setdispatch(true);
+        } else {
+          board = {
+            ...board,
+            turn: event.data.turn,
+            winner: event.data.winner,
+            player: event.data.player === 'X' ? 'O' : 'X',
+          };
+          callValues(event.data.row, event.data.value);
+        }
       }
     }
   });
 
   return (
     <>
-      <div className="board" id={'board'}>
-        {rows.map((text, index) => {
-          return (
-            <Row
-              row={index}
-              chooseSquare={handleClick}
-              columns={text}
-              key={`rowKey${index}xx`}
-            />
-          );
-        })}
+      <div className="board" id={'board'} ref={values}>
+        {squares}
       </div>
       <button
         id="reset"
         onClick={() => {
-          setBoard(getInitState());
+          resetBoard();
           channel.sendEvent({
             type: 'move',
-            data: { board: getInitState() },
+            data: {
+              reset: true,
+            },
           });
         }}
       >
         Reset board
       </button>
 
-      {dispatch && <Modal {...callModal(board.winner)} />}
+      {dispatch && <Modal {...callModal(won)} />}
     </>
   );
 }

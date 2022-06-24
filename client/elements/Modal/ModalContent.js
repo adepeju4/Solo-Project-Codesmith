@@ -5,7 +5,7 @@ function ModalContent({
   title,
   body,
   setOpenModal,
-  setDispatch,
+  setdispatch,
   footer,
   callback,
 }) {
@@ -23,7 +23,7 @@ function ModalContent({
       exit={{ opacity: 0 }}
       onClick={() => {
         setOpenModal(false);
-        setDispatch && setDispatch(false);
+        setdispatch(false);
       }}
     >
       <motion.div
@@ -42,7 +42,7 @@ function ModalContent({
           <button
             onClick={() => {
               setOpenModal(false);
-              setDispatch && setDispatch(false);
+              setdispatch(false);
             }}
             id="cancelBtn"
           >
@@ -51,7 +51,7 @@ function ModalContent({
           <button
             onClick={async () => {
               setOpenModal(false);
-              setDispatch && setDispatch(false);
+              setdispatch(false);
               callback && callback();
             }}
           >

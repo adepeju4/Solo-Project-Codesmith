@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Board from '../../elements/TicTacToeBoard/Board.js';
+import { Window, MessageList, MessageInput } from 'stream-chat-react';
 
 function TicTacToe({ channel }) {
   const [playersJoined, setPlayersJoined] = useState(
@@ -11,12 +12,22 @@ function TicTacToe({ channel }) {
   });
 
   if (!playersJoined) {
-    return <div>Waiting for other players to join</div>;
+    return <div className="loading">Waiting for other players to join...</div>;
   }
   return (
     <div className="gameContainer">
       <Board channel={channel} />
       {/* TODO: CHAT*/}
+
+      {/* <Window>
+        <MessageList
+          disableDateSeparator
+          closeReactionSelectorOnClick
+          hideDeletedMessages
+          messageActions={['react']}
+        />
+        <MessageInput noFiles publishTypingEvent />
+      </Window> */}
       {/* {LEAVE GAME BTN} */}
     </div>
   );

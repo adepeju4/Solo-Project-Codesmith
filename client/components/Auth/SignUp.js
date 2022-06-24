@@ -8,12 +8,22 @@ function SignUp({ setIsAuth, setMode }) {
   const cookies = new Cookies();
   const [user, setUser] = useState({});
   const [error, setError] = useState(false);
+  const [inputError, setinputError] = useState({});
 
   const modalProps = {
     title: ':( Opps!',
     body: `Something went wrong :( ... please try again later`,
     dispatch: error,
     setDispatch: setError,
+  };
+
+  const checkInputHandler = (input, label) => {
+    if (!input) setinputError({ ...inputError, [label]: true });
+    else setinputError({ ...inputError, [label]: false });
+  };
+
+  const inputErrorMessage = (input) => {
+    return <p className="inputError"> {input} not provided</p>;
   };
 
   const handleSubmit = async (e) => {
@@ -35,34 +45,49 @@ function SignUp({ setIsAuth, setMode }) {
   return (
     <div className="signup">
       <label> Sign Up</label>
+
+      {inputError.firstName && inputErrorMessage('firstName')}
       <input
         type="text"
         placeholder="First Name"
         onChange={(e) => {
           setUser({ ...user, firstName: e.target.value });
         }}
+        onBlur={(e) => {
+          checkInputHandler(e.target.value, 'firstName');
+        }}
       />
-
+      {inputError.lastName && inputErrorMessage('lastName')}
       <input
         type="text"
         placeholder="Last Name"
         onChange={(e) => {
           setUser({ ...user, lastName: e.target.value });
         }}
+        onBlur={(e) => {
+          checkInputHandler(e.target.value, 'lastName');
+        }}
       />
-
+      {inputError.userName && inputErrorMessage('userName')}
       <input
         type="text"
         placeholder="Username"
         onChange={(e) => {
           setUser({ ...user, userName: e.target.value });
         }}
+        onBlur={(e) => {
+          checkInputHandler(e.target.value, 'userName');
+        }}
       />
+      {inputError.password && inputErrorMessage('password')}
       <input
         type="password"
         placeholder="Password"
         onChange={(e) => {
           setUser({ ...user, password: e.target.value });
+        }}
+        onBlur={(e) => {
+          checkInputHandler(e.target.value, 'password');
         }}
       />
       <div
