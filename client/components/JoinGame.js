@@ -23,9 +23,11 @@ function JoinGame() {
   const [dispatch, setDispatch] = useState(false);
 
   const gamesList = {
-    'Tic tac toe': <TicTacToe channel={channel} client={client} />,
-    Ludo: <Ludo channel={channel} client={client} />,
-    Chess: <Chess channel={channel} client={client} />,
+    'Tic Tac Toe': (
+      <TicTacToe channel={channel} client={client} rivalName={rivalName} />
+    ),
+    Ludo: <Ludo channel={channel} client={client} rivalName={rivalName} />,
+    Chess: <Chess channel={channel} client={client} rivalName={rivalName} />,
   };
 
   const modalProps = {

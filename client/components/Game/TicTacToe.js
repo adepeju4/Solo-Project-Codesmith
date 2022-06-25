@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Board from '../../elements/TicTacToeBoard/Board.js';
 import { Window, MessageList, MessageInput } from 'stream-chat-react';
 
-function TicTacToe({ channel }) {
+function TicTacToe({ channel, rivalName }) {
   const [playersJoined, setPlayersJoined] = useState(
     channel.state.watcher_count === 2
   );
@@ -16,7 +16,7 @@ function TicTacToe({ channel }) {
   }
   return (
     <div className="gameContainer">
-      <Board channel={channel} />
+      <Board channel={channel} rivalName={rivalName} />
       {/* TODO: CHAT*/}
 
       {/* <Window>

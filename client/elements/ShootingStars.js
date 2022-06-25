@@ -14,7 +14,33 @@ function ShootingStars() {
       <span className="shootingStars" key={9}></span>
     </section>,
   ];
-  return <>{shootingStars};</>;
+
+  function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const STAR_COUNT = 100;
+  let result = '';
+  for (let i = 0; i < STAR_COUNT; i++) {
+    result += `${randomNumber(-50, 50)}vw ${randomNumber(
+      -50,
+      50
+    )}vh ${randomNumber(0, 3)}px ${randomNumber(0, 3)}px #fff,`;
+  }
+
+  const starBg = (
+    <div
+      className="starsbg"
+      style={{ boxShadow: result.substring(0, result.length - 1) }}
+    ></div>
+  );
+
+  return (
+    <>
+      {shootingStars}
+      {starBg}
+    </>
+  );
 }
 
 export default ShootingStars;

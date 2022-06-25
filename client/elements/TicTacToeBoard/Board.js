@@ -1,4 +1,3 @@
-import { get } from 'mongoose';
 import React, { useState, useRef, useEffect } from 'react';
 import { useChatContext } from 'stream-chat-react';
 
@@ -43,7 +42,9 @@ function checkWin(rows) {
 
 const nextMove = { X: 'O', O: 'X' };
 
-function Board({ channel }) {
+let points = 0;
+
+function Board({ channel, rivalName }) {
   let board = getInitState();
   const [won, setwon] = useState(false);
   const [dispatch, setdispatch] = useState(false);
@@ -52,7 +53,14 @@ function Board({ channel }) {
 
   const [squares, setSquares] = useState([]);
 
+  const [playerPoints, setPlayerPoints] = useState(0);
+
   const values = useRef();
+  const rivalPoints = useRef();
+
+  useEffect(() => {
+    setSquares(getSquares(rows));
+  }, []);
 
   const callModal = (won) => {
     const modalProps = {
@@ -85,8 +93,9 @@ function Board({ channel }) {
     if (winner) {
       setwon(true);
       setdispatch(true);
-      console.log(client.user.name, 'won!', dispatch);
+      points += 1;
       resetBoard();
+      setPlayerPoints(points);
     }
 
     board = { ...board, turn, winner, player };
@@ -99,13 +108,10 @@ function Board({ channel }) {
         turn,
         winner,
         player,
+        points,
       },
     });
   };
-
-  useEffect(() => {
-    console.log(dispatch);
-  }, [dispatch]);
 
   const getSquares = (vals) => {
     return vals.map((text, index) => {
@@ -140,19 +146,49 @@ function Board({ channel }) {
     }
   };
 
-  useEffect(() => {
-    setSquares(getSquares(rows));
-  }, []);
+  const handleResetBoard = (clicked) => {
+    resetBoard();
+
+    if (clicked) {
+      points = 0;
+      setPlayerPoints(points);
+      channel.sendEvent({
+        type: 'move',
+        data: {
+          reset: true,
+          points: points,
+        },
+      });
+    } else {
+      channel.sendEvent({
+        type: 'move',
+        data: {
+          reset: true,
+        },
+      });
+    }
+  };
 
   channel.on((event) => {
     if (event.type === 'move' && event.user.id !== client.userID) {
       if (event.data.reset) {
         resetBoard();
+        if (event.data.points) {
+          points = 0;
+          setPlayerPoints(points);
+          rivalPoints.current.innerHTML = ``;
+          rivalPoints.current.innerHTML = `${rivalName}: ${event.data.points}`;
+        }
       } else {
         if (event.data.winner) {
+          console.log(event.data);
           resetBoard();
           setwon(false);
           setdispatch(true);
+          if (rivalPoints.current) {
+            rivalPoints.current.innerHTML = ``;
+            rivalPoints.current.innerHTML = `${rivalName}: ${event.data.points}`;
+          }
         } else {
           board = {
             ...board,
@@ -160,6 +196,7 @@ function Board({ channel }) {
             winner: event.data.winner,
             player: event.data.player === 'X' ? 'O' : 'X',
           };
+
           callValues(event.data.row, event.data.value);
         }
       }
@@ -171,20 +208,23 @@ function Board({ channel }) {
       <div className="board" id={'board'} ref={values}>
         {squares}
       </div>
-      <button
-        id="reset"
-        onClick={() => {
-          resetBoard();
-          channel.sendEvent({
-            type: 'move',
-            data: {
-              reset: true,
-            },
-          });
-        }}
-      >
-        Reset board
-      </button>
+      <div className="playerScreen">
+        <div className="scoreBoard">
+          <div className="playerScore">{`${client.user.name}: ${playerPoints}`}</div>
+          <div
+            className="rivalScore"
+            ref={rivalPoints}
+          >{`${rivalName}: ${0}`}</div>
+        </div>
+        <button
+          id="reset"
+          onClick={() => {
+            () => handleResetBoard(true);
+          }}
+        >
+          Reset board
+        </button>
+      </div>
 
       {dispatch && <Modal {...callModal(won)} />}
     </>
