@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 
-import SignUp from './Auth/SignUp.js';
-import Login from './Auth/Login.js';
-import '../scss/global.scss';
+import './scss/global.scss';
 import { StreamChat } from 'stream-chat';
 import Cookies from 'universal-cookie';
-import JoinGame from './JoinGame.js';
-import { Chat } from 'stream-chat-react';
+
+import ShootingStars from './elements/ShootingStars.js';
+
+import Home from './pages/Home.js';
+import { StoreProvider } from 'easy-peasy';
+import store from './lib/store.js';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false);
   const cookies = new Cookies();
 
   const client = StreamChat.getInstance(process.env.KEY);
+
   const token = cookies.get('token');
-
-  const [isAuth, setIsAuth] = useState(false);
-
   if (token) {
     client
       .connectUser(
@@ -45,19 +46,15 @@ function App() {
   };
   return (
     <div className="App">
-      {isAuth ? (
-        <Chat client={client}>
-          <>
-            <JoinGame />
-            <button onClick={handleLogOut}>Log out</button>
-          </>
-        </Chat>
-      ) : (
-        <>
-          <SignUp setIsAuth={setIsAuth} />
-          <Login setIsAuth={setIsAuth} />
-        </>
-      )}
+      <StoreProvider store={store}>
+        <Home
+          isAuth={isAuth}
+          setIsAuth={setIsAuth}
+          handleLogOut={handleLogOut}
+          client={client}
+        />
+        <ShootingStars />
+      </StoreProvider>
     </div>
   );
 }

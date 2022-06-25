@@ -1,7 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-function ModalContent({ title, body, setOpenModal, setDispatch }) {
+function ModalContent({
+  title,
+  body,
+  setOpenModal,
+  setdispatch,
+  footer,
+  callback,
+}) {
   const modalContentAnimate = {
     initial: { x: 100, opacity: 0 },
     animate: { x: 0, opacity: 1, transition: { delay: 0.3 } },
@@ -16,7 +23,7 @@ function ModalContent({ title, body, setOpenModal, setDispatch }) {
       exit={{ opacity: 0 }}
       onClick={() => {
         setOpenModal(false);
-        setDispatch && setDispatch(false);
+        setdispatch(false);
       }}
     >
       <motion.div
@@ -35,13 +42,21 @@ function ModalContent({ title, body, setOpenModal, setDispatch }) {
           <button
             onClick={() => {
               setOpenModal(false);
-              setDispatch && setDispatch(false);
+              setdispatch(false);
             }}
             id="cancelBtn"
           >
-            Cancel
+            {footer ? footer[0] : <div>Continue</div>}
           </button>
-          <button>Continue</button>
+          <button
+            onClick={async () => {
+              setOpenModal(false);
+              setdispatch(false);
+              callback && callback();
+            }}
+          >
+            {footer ? footer[1] : <div>Cancel</div>}
+          </button>
         </motion.div>
       </motion.div>
     </motion.div>

@@ -1,0 +1,220 @@
+.loading {
+  font-size: 1.5rem;
+}
+
+.playerCard {
+  border-radius: 20px;
+  background-color: #391898;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 12rem;
+  max-width: 15rem;
+  padding: 2rem;
+  text-align: center;
+
+  .playerName {
+    font-size: 2rem;
+  }
+  .player {
+    font-size: 1.3rem;
+  }
+}
+
+.myCard {
+  left: 5rem;
+}
+
+.otherCard {
+  right: 10rem;
+}
+
+.str-chat__reaction-list ul,
+.str-chat__message-reactions-list {
+  flex-flow: row wrap;
+  display: flex;
+}
+.str-chat__list {
+  background-color: transparent;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 5px;
+  height: 300px;
+  width: 300px;
+
+  overflow-y: scroll;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.str-chat__list ul {
+  list-style-type: none;
+  margin: 5px;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.str-chat__list::-webkit-scrollbar {
+  display: none;
+}
+.str-chat__list li {
+  list-style-type: none;
+  background-color: lightgrey;
+  margin-top: 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  object-fit: cover;
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.emoji-mart-category {
+  display: inherit;
+  margin-top: 1.5rem;
+}
+
+.str-chat__message-simple__actions {
+  margin-bottom: 1rem;
+}
+
+.str-chat__list .str-chat__message-simple-status {
+  display: none;
+}
+
+.str-chat__list .str-chat__avatar {
+  display: none;
+}
+
+.str-chat__message-text-inner {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 5px;
+}
+
+.str-chat__message-inner img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.str-chat__message-data {
+  margin-bottom: 20px;
+}
+.str-chat__message-data span {
+  margin-left: 5px;
+}
+
+.str-chat__message-data time {
+  margin-left: 5px;
+}
+
+.str-chat__input-flat div:first-child {
+  width: 310px;
+  display: flex;
+  flex-flow: column-reverse wrap;
+  background-color: lightgrey;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.str-chat__input-flat-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.str-chat__input-flat-wrapper textarea {
+  resize: none;
+  width: 200px;
+  height: 90px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px black;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.str-chat__message-simple__actions {
+  width: 100%;
+  padding-left: 5px;
+  margin-top: 5px;
+}
+.str-chat__message-simple__actions__action--reactions {
+  display: flex;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: #ffffff;
+  border: 1px solid #e9e9ea;
+  box-sizing: border-box;
+  border-radius: 50vw;
+  padding: 6px 6px 4px 6px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.str-chat__message-reactions-list {
+  display: flex;
+}
+
+.str-chat__reaction-list--counter {
+  display: none;
+}
+.str-chat__reaction-list--reverse button {
+  margin-left: 10px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.str-chat__message-reactions-list-item {
+  margin-left: 10px;
+  border: none;
+  border-radius: 50vw;
+  width: 30px;
+  height: 30px;
+}
+.str-chat__message-reactions-list-item span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.emoji-mart-emoji-custom span {
+  height: 15px !important;
+  width: 15px !important;
+}
+
+.str-chat__input--emojipicker {
+  max-height: 40rem;
+}
+
+.emoji-mart-category-list {
+  display: flex;
+  flex-flow: row wrap;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 1000;
+  overflow-y: scroll;
+  background: red;
+  top: 3rem;
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.str-chat__input-flat .rfu-dropzone {
+  position: relative;
+}
