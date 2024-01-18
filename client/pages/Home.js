@@ -16,29 +16,27 @@ function Home({ setIsAuth, isAuth, handleLogOut, client }) {
     <img src={Star} key={3} />,
   ];
 
-  return (
+  return isAuth ? (
     <>
-      {isAuth ? (
-        <Chat client={client}>
-          <ChooseGame />
-        </Chat>
-      ) : (
-        <div className="authContainer">
-          <div className="gameName">
-            <div>Games FM</div>
-            {bigStars}
-          </div>
-          {mode === 'signup' ? (
-            <SignUp setIsAuth={setIsAuth} setMode={setMode} />
-          ) : (
-            <Login setIsAuth={setIsAuth} setMode={setMode} />
-          )}
-        </div>
-      )}
       <button onClick={handleLogOut} id="logout">
         Log Out
       </button>
+      <Chat client={client}>
+        <ChooseGame />
+      </Chat>
     </>
+  ) : (
+    <div className="authContainer">
+      <div className="gameName">
+        <div>Games FM</div>
+        {bigStars}
+      </div>
+      {mode === 'signup' ? (
+        <SignUp setIsAuth={setIsAuth} setMode={setMode} />
+      ) : (
+        <Login setIsAuth={setIsAuth} setMode={setMode} />
+      )}
+    </div>
   );
 }
 
