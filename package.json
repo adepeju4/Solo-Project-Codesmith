@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js",
-    "build": "webpack",
+    "build": "concurrently \"node server/server.js\" \"webpack\"",
     "dev": "concurrently \"nodemon server/server.js\" \"webpack serve --open\"",
     "gulp-prod": "node_modules/.bin/gulp prod",
     "gulp-dev": "node_modules/.bin/gulp dev"

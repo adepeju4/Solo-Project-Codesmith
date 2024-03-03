@@ -19,9 +19,14 @@ function Home({ setIsAuth, isAuth, handleLogOut, client }) {
   return (
     <>
       {isAuth ? (
-        <Chat client={client}>
-          <ChooseGame />
-        </Chat>
+        <>
+          <button onClick={handleLogOut} id="logout">
+            Log Out
+          </button>
+          <Chat client={client}>
+            <ChooseGame />
+          </Chat>
+        </>
       ) : (
         <div className="authContainer">
           <div className="gameName">
@@ -35,9 +40,6 @@ function Home({ setIsAuth, isAuth, handleLogOut, client }) {
           )}
         </div>
       )}
-      <button onClick={handleLogOut} id="logout">
-        Log Out
-      </button>
     </>
   );
 }

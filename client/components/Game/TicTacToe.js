@@ -19,7 +19,7 @@ function TicTacToe({ channel, rivalName }) {
       <Board channel={channel} rivalName={rivalName} />
       {/* TODO: CHAT*/}
 
-      {/* <Window>
+      <Window>
         <MessageList
           disableDateSeparator
           closeReactionSelectorOnClick
@@ -27,7 +27,7 @@ function TicTacToe({ channel, rivalName }) {
           messageActions={['react']}
         />
         <MessageInput noFiles publishTypingEvent />
-      </Window> */}
+      </Window>
       {/* {LEAVE GAME BTN} */}
     </div>
   );
