@@ -70,14 +70,16 @@ function JoinGame() {
         <Channel channel={channel} input={CustomInput}>
           {gamesList[selectedGame]}
         </Channel>
-      ) : (
+      ) :
+
+      
         <JoinGameForm
           game={selectedGame}
           client={client}
           onCreateChannel={createChannel}
           setRivalName={setRivalName}
         />
-      )}
+      }
 
       {dispatch && useDispatchComp(Modal, modalProps)}
     </>

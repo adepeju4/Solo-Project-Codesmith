@@ -62,6 +62,14 @@
   scrollbar-width: none;
 }
 
+.str-chat, .str-chat__container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+justify-content: center;
+align-items: center;
+}
+
 .str-chat__list::-webkit-scrollbar {
   display: none;
 }
