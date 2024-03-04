@@ -146,27 +146,18 @@ function Board({ channel, rivalName }) {
     }
   };
 
-  const handleResetBoard = (clicked) => {
+  const handleResetBoard = () => {
     resetBoard();
 
-    if (clicked) {
-      points = 0;
-      setPlayerPoints(points);
-      channel?.sendEvent({
-        type: "move",
-        data: {
-          reset: true,
-          points: points,
-        },
-      });
-    } else {
-      channel?.sendEvent({
-        type: "move",
-        data: {
-          reset: true,
-        },
-      });
-    }
+    points = 0;
+    setPlayerPoints(points);
+    channel?.sendEvent({
+      type: "move",
+      data: {
+        reset: true,
+        points: points,
+      },
+    });
   };
 
   channel?.on((event) => {
@@ -215,12 +206,7 @@ function Board({ channel, rivalName }) {
             ref={rivalPoints}
           >{`${rivalName}: ${0}`}</div>
         </div>
-        <button
-          id="reset"
-          onClick={() => {
-            () => handleResetBoard(true);
-          }}
-        >
+        <button id="reset" onClick={handleResetBoard}>
           Reset board
         </button>
       </div>
