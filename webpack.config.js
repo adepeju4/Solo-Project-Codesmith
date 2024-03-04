@@ -73,7 +73,7 @@ export default {
     },
     compress: true,
     port: 8080,
-    public: 'gamebase.adepejuorefejo.com',
+    host: 'gamebase.adepejuorefejo.com',
     //proxy allows us to mimic localhost 3000 requests
     //the server by default does not respond to 8080
     proxy: {
