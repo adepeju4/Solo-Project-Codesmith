@@ -78,7 +78,7 @@ export default {
     //the server by default does not respond to 8080
     proxy: {
       '/Api': {
-        target: 'https://gamebase.adepejuorefejo.com',
+        target: 'https://localhost:8080',
         router: () => 'https://gamebase-api.adepejuorefejo.com',
         logLevel: 'debug',
       },
