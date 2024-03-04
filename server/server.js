@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
-import router from '../routes/index.js';
-import startDB from '../database/db.js';
+import router from "./routes/index.js";
+import startDB from "./database/db.js";
 
 const app = express();
 dotenv.config();
@@ -14,22 +14,22 @@ app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);
 
-process.env.NODE_ENV === 'production' &&
+process.env.NODE_ENV === "production" &&
   app.use(
-    '/build',
-    express.static(path.join(path.dirname(__filename), '../build'))
+    "/build",
+    express.static(path.join(path.dirname(__filename), "../build"))
   );
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   return res
     .status(200)
-    .sendFile(path.join(path.dirname(__filename), '../index.html'));
+    .sendFile(path.join(path.dirname(__filename), "../index.html"));
 });
 
-app.use('/Api', router);
+app.use("/Api", router);
 
 // Unknown route handler
-app.use((req, res) => res.sendStatus(404));
+app.use((req, res) => res.status(404).send({ message: "Route not found" }));
 
 // Global error handler
 app.use((err, req, res, next) => {
