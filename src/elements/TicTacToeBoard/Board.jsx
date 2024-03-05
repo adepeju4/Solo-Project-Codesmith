@@ -128,6 +128,7 @@ function Board({ channel, rivalName }) {
           id: eventId,
           turn: nextPlayer,
           winner: winner ? gameState.player : null,
+          isBoardFull,
           rowIndex,
           columnIndex,
           rows: newRows,
@@ -138,7 +139,16 @@ function Board({ channel, rivalName }) {
     }
   };
   const applyOpponentMove = (move) => {
-    const { rowIndex, columnIndex, winner, player, turn, rows, id } = move;
+    const {
+      rowIndex,
+      columnIndex,
+      winner,
+      player,
+      turn,
+      rows,
+      id,
+      isBoardFull,
+    } = move;
 
     if (player && player === gameState.player) return;
 
@@ -151,13 +161,21 @@ function Board({ channel, rivalName }) {
     if (winner) {
       setGameOutcome("loss");
       setIsModalVisible(true);
-      setShowRivalTurn(false);
+
       processedEventUUIDs.add(id);
 
       // Determine the next starter based on the current player's role
       const nextStarter = gameState.player === "X" ? "O" : "X";
       resetGame(nextStarter); // Update to pass the next starter
 
+      return;
+    }
+
+    if (isBoardFull && !winner) {
+      setGameOutcome("draw");
+      setIsModalVisible(true);
+
+      processedEventUUIDs.add(id);
       return;
     }
 
@@ -192,6 +210,7 @@ function Board({ channel, rivalName }) {
         : "X";
     resetGame(nextStarter);
     setGameOutcome("");
+    setrivalMessage("");
     setIsModalVisible(false);
 
     channel.sendEvent({
@@ -221,22 +240,27 @@ function Board({ channel, rivalName }) {
   useEffect(() => {
     if (!gameOutcome) return; // Exit early if there's no outcome
 
-    let outcomeMessage = "";
+    let message = "";
     let outcomeType = "";
-
-    if (gameOutcome === "win") {
-      outcomeMessage = "😭";
-      outcomeType = "wins";
-    } else if (gameOutcome === "draw") {
-      outcomeMessage = "🤔 let's go again!";
-      outcomeType = "draws";
-    } else if (gameOutcome === "loss") {
-      outcomeMessage = "🤣🤣";
-      outcomeType = "losses";
+    switch (gameOutcome) {
+      case "win":
+        outcomeType = "win";
+        message = "😭";
+        break;
+      case "draw":
+        outcomeType = "draw";
+        message = "🤔 let's go again!";
+        break;
+      case "loss":
+        outcomeType = "loss";
+        message = "🤣🤣";
+        break;
+      default:
+        message = ""; // Default message or state
     }
 
     // Update the rival message based on the outcome
-    setrivalMessage(outcomeMessage);
+    setrivalMessage(message);
 
     // Update the game stats in the global store
     if (outcomeType) {
