@@ -1,9 +1,10 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React from "react";
 
-function Square({ turn, player, value, row, square, onSquareClick }) {
+function Square({ rivalTurn, value, row, square, onSquareClick }) {
   return (
     <button
-      disabled={player !== turn}
+      disabled={rivalTurn}
       className="square"
       onClick={() => {
         onSquareClick(row, square);

@@ -1,30 +1,21 @@
 import { createStore, action, persist } from "easy-peasy";
 
-const getInitState = (creator, starter) => {
-  const initState = {
-    rows: [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ],
-    winner: "",
-    turn: starter || "X",
-    player: creator ? "X" : "O",
-  };
-  return initState;
-};
-
 export const store = createStore(
   persist(
     {
-      isCreator: false,
       activeGame: "",
       activeGamePath: "",
-      winner: "",
-      gameState: getInitState(),
       user: null,
       channel: null,
       rivals: [],
+      gameStats: {}, // Adjusted part
+      // Other actions...
+      setGameStat: action((state, { gameId, statType }) => {
+        if (!state.gameStats[gameId]) {
+          state.gameStats[gameId] = { wins: 0, losses: 0, draws: 0 };
+        }
+        state.gameStats[gameId][statType] += 1;
+      }),
       setActiveGame: action((state, payload) => {
         state.activeGame = payload;
       }),
@@ -40,31 +31,10 @@ export const store = createStore(
       setActiveGamePath: action((state, payload) => {
         state.activeGamePath = payload;
       }),
-
-      setGameState: action((state, payload) => {
-        state.gameState = { ...state.gameState, ...payload };
-
-        console.log(state.gameState);
-      }),
-
-      setIsCreator: action((state, payload) => {
-        state.isCreator = payload;
-      }),
-
-      setGame: action((state) => {
-        state.gameState = getInitState(state.isCreator);
-      }),
-
-      resetGame: action((state) => {
-        state.gameState = getInitState(
-          state.isCreator,
-          state.winner === "X" ? "O" : "X"
-        );
-      }),
     },
     {
       storage: "localStorage",
-      allow: ["turn", "game"],
+      allow: ["gameStats"],
     }
   )
 );

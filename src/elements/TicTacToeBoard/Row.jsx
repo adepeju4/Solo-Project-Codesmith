@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import Square from "./Square";
 
 function Row({ ...props }) {
-
   return (
     <div className="row">
       {props.columns.map((text, index) => (
