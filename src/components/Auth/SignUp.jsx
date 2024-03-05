@@ -3,7 +3,8 @@ import fetcher from "../../lib/fetcher.js";
 import { useDispatchComp } from "../../lib/hooks";
 import Modal from "../../elements/Modal/Modal";
 import Cookies from "universal-cookie";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Input } from "antd";
 
 function SignUp() {
   const cookies = new Cookies();
@@ -11,6 +12,8 @@ function SignUp() {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
   const [inputError, setinputError] = useState({});
+
+  const navigate = useNavigate();
 
   const modalProps = {
     title: ":( Opps!",
@@ -53,11 +56,15 @@ function SignUp() {
     setPending(false);
   };
   return (
-    <form className="signup" onSubmit={handleSubmit}>
+    <form
+      className="signup w-[50%] lg:w-[30%] flex flex-col gap-4 text-medium"
+      onSubmit={handleSubmit}
+    >
       <label> Sign Up</label>
 
       {inputError.firstName && inputErrorMessage("firstName")}
-      <input
+      <Input
+        className="w-[60%]"
         type="text"
         placeholder="First Name"
         required
@@ -69,7 +76,8 @@ function SignUp() {
         }}
       />
       {inputError.lastName && inputErrorMessage("lastName")}
-      <input
+      <Input
+        className="w-[60%]"
         type="text"
         placeholder="Last Name"
         required
@@ -81,7 +89,8 @@ function SignUp() {
         }}
       />
       {inputError.userName && inputErrorMessage("userName")}
-      <input
+      <Input
+        className="w-[60%]"
         type="text"
         placeholder="Username"
         required
@@ -93,7 +102,8 @@ function SignUp() {
         }}
       />
       {inputError.password && inputErrorMessage("password")}
-      <input
+      <Input
+        className="w-[60%]"
         type="password"
         placeholder="Password"
         required

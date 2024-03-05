@@ -1,19 +1,18 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { useChatContext } from "stream-chat-react";
+
 import { useDispatchComp } from "../lib/hooks";
 import Modal from "../elements/Modal/Modal";
 
 import JoinGameForm from "../elements/JoinGameForm/JoinGameForm";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
-import { StreamChat } from "stream-chat";
-import Cookies from "universal-cookie";
 
-function JoinGame() {
+function JoinGame({ client }) {
   const selectedGame = useStoreState((state) => state.activeGame);
   const [error, setError] = useState(null);
-  const { client } = useChatContext();
+
   const navigate = useNavigate();
   const activeGame = useStoreState((state) => state.activeGame);
   const activeGamePath = useStoreState((state) => state.activeGamePath);
@@ -22,10 +21,6 @@ function JoinGame() {
 
   const rivals = useStoreState((state) => state.rivals);
   const setRivals = useStoreActions((state) => state.setRivals);
-
-  const cookies = new Cookies();
-
-  const token = cookies.get("token");
 
   const modalProps = {
     title: ":( Opps!",
@@ -49,11 +44,13 @@ function JoinGame() {
         .filter(Boolean);
 
       if (foundUsers.length > 0) {
-        // Assuming you want to create a channel with all found users plus the current user
         const memberIds = foundUsers.map((user) => user.id);
-        memberIds.push(client.userID); // Add current user's ID
+        memberIds.push(client.userID);
 
         const newChannel = await client.channel("messaging", {
+          image:
+            "https://getstream.io/random_svg/?id=blue-sand-2&name=Blue+Sand",
+          name: activeGame,
           members: memberIds,
         });
 
@@ -64,6 +61,7 @@ function JoinGame() {
         setError(true);
       }
     } catch (error) {
+      console.log(error);
       modalProps.body = error.message;
       setError(error.message);
     }
@@ -79,13 +77,15 @@ function JoinGame() {
     <>
       <Navbar client={client} />
 
-      <JoinGameForm
-        game={selectedGame}
-        client={client}
-        onCreateChannel={createChannel}
-        rivals={rivals}
-        setRivals={setRivals}
-      />
+      <div className="h-full w-full flex items-center justify-center p-8">
+        <JoinGameForm
+          game={selectedGame}
+          client={client}
+          onCreateChannel={createChannel}
+          rivals={rivals}
+          setRivals={setRivals}
+        />
+      </div>
 
       {error && useDispatchComp(Modal, modalProps)}
     </>

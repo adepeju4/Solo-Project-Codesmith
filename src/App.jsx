@@ -16,34 +16,11 @@ import Provider from "./components/Provider";
 import Layout from "./pages/Layout.jsx";
 import JoinGame from "./components/JoinGame.jsx";
 
-import Cookies from "universal-cookie";
 import { StreamChat } from "stream-chat";
 
 function App() {
   const [user, setUser] = useState(null);
-  const cookies = new Cookies();
-
   const client = StreamChat.getInstance(import.meta.env.VITE_KEY);
-
-  const token = cookies.get("token");
-
-  if (token) {
-    client
-      .connectUser(
-        {
-          id: cookies.get("userId"),
-          name: cookies.get("userName"),
-          firstName: cookies.get("firstName"),
-          lastName: cookies.get("lastName"),
-          hashedPassword: cookies.get("hashedPassword"),
-        },
-        token
-      )
-      .then((user) => {
-        setUser(user);
-      });
-  }
-
   const router = createBrowserRouter([
     {
       path: "/signup",
@@ -64,7 +41,7 @@ function App() {
     {
       path: "/",
       element: (
-        <Provider user={user}>
+        <Provider user={user} setUser={setUser} client={client}>
           <ChooseGame />,
         </Provider>
       ),
@@ -72,8 +49,8 @@ function App() {
     {
       path: "/join",
       element: (
-        <Provider user={user}>
-          <JoinGame />,
+        <Provider user={user} setUser={setUser} client={client}>
+          <JoinGame client={client} />,
         </Provider>
       ),
     },

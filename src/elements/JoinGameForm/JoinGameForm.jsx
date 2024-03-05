@@ -1,56 +1,51 @@
+import { Input } from "antd";
 import React, { useState } from "react";
 
-function JoinGameForm({
-  game,
-
-  onCreateChannel,
-  setRivals,
-}) {
-  // Use state to handle input for multiple rivals
+// eslint-disable-next-line react/prop-types
+function JoinGameForm({ game, onCreateChannel, setRivals }) {
   const [rivalInputs, setRivalInputs] = useState([""]);
-
-  // Handle change for single rival games
   const handleChangeSingle = (e) => {
-    setRivals([e.target.value]); // Store in an array for consistency
+    setRivals([e.target.value]);
   };
-
-  // Handle change for inputs in games that allow multiple rivals
   const handleChangeMultiple = (index, value) => {
     const updatedRivals = [...rivalInputs];
     updatedRivals[index] = value;
     setRivalInputs(updatedRivals);
-    setRivals(updatedRivals.filter(Boolean)); // Update parent state, filter out empty strings
+    setRivals(updatedRivals.filter(Boolean));
   };
 
-  // Add another input for multiple rivals
   const addRivalInput = () => {
     setRivalInputs([...rivalInputs, ""]);
   };
 
   return (
-    <div className="joinGame">
+    <div className="joinGame w-[100%] md:w-[60%] lg:w-[600px]  flex flex-col gap-4 text-medium">
       <label>Create Game</label>
       {game === "Tic Tac Toe" || game === "Chess" ? (
         <>
-          <input
+          <Input
+            className="w-[80%]  md:w-[80%]"
             type="text"
             placeholder="Username of rival..."
             onChange={handleChangeSingle}
           />
-          <button onClick={onCreateChannel}>Join/Start Game</button>
+          <button onClick={onCreateChannel} className="my-4">
+            Join/Start Game
+          </button>
         </>
       ) : (
         <>
           {rivalInputs.map((_, index) => (
-            <input
+            <Input
               key={index}
+              className="w-[60%]  "
               type="text"
               placeholder="Username of rival..."
               onChange={(e) => handleChangeMultiple(index, e.target.value)}
             />
           ))}
 
-          <div className="join--cta">
+          <div className="join--cta my-8 flex gap-8">
             <button type="button" onClick={addRivalInput}>
               Add Another Rival
             </button>

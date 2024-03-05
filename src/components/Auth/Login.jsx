@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import fetcher from "../../lib/fetcher.js";
 import { useDispatchComp } from "../../lib/hooks";
 import Modal from "../../elements/Modal/Modal";
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import { Input } from "antd";
 
 function LogIn() {
   const cookies = new Cookies();
@@ -48,16 +49,20 @@ function LogIn() {
   };
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
+    <form
+      className="login w-[50%] lg:w-[30%] flex flex-col gap-4 text-medium"
+      onSubmit={handleSubmit}
+    >
       <label> Log In</label>
 
       {inputError.userName && (
         <p className="inputError">Username not provided</p>
       )}
-      <input
+      <Input
         type="text"
         placeholder="Username"
         required
+        className="w-[60%]  "
         onChange={(e) => {
           setUser({ ...user, userName: e.target.value });
         }}
@@ -69,10 +74,11 @@ function LogIn() {
       {inputError.password && (
         <p className="inputError">Password not provided</p>
       )}
-      <input
+      <Input
         type="password"
         required
         placeholder="Password"
+        className="w-[60%]"
         onChange={(e) => {
           setUser({ ...user, password: e.target.value });
         }}

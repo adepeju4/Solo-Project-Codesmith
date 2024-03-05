@@ -85,6 +85,9 @@ input::placeholder {
   width: 8rem;
   padding: 1rem 0.5rem;
   border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #reset {
   background: #391898;

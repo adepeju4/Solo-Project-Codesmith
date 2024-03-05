@@ -12,6 +12,10 @@
   position: relative;
 }
 
+.App{
+  display: block;
+}
+
 .gameContainer {
   flex-direction: row;
   justify-content: space-evenly;
@@ -66,7 +70,7 @@
 
 #board {
   width: 390px;
-  height: 390px;
+
   // border: 5px solid $lightOrange;
   // background-color: $darkBlue;
 

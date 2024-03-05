@@ -13,9 +13,10 @@ function Layout({ children }) {
 
   return (
     <div className="authContainer">
-      <div className="gameName">
+      <div className="gameName flex items-center justify-center flex-col">
         <div>Games FM</div>
-        {bigStars}
+
+        <div className="flex p-8">{bigStars}</div>
       </div>
       {children}
     </div>

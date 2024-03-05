@@ -1,15 +1,16 @@
 import React from 'react';
 
-function Square({ value, row, square, chooseSquare }) {
+function Square({ turn, player, value, row, square, onSquareClick }) {
   return (
-    <div
+    <button
+      disabled={player !== turn}
       className="square"
       onClick={() => {
-        chooseSquare(row, square);
+        onSquareClick(row, square);
       }}
     >
       {value}
-    </div>
+    </button>
   );
 }
 

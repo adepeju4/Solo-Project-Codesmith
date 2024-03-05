@@ -9,14 +9,7 @@ function ModalContent({
   footer,
   callback,
 }) {
-  console.log({
-    title,
-    body,
-    setOpenModal,
-    setDispatch,
-    footer,
-    callback,
-  });
+
   const modalContentAnimate = {
     initial: { x: 100, opacity: 0 },
     animate: { x: 0, opacity: 1, transition: { delay: 0.3 } },

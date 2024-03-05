@@ -1,44 +1,77 @@
 /** @type {import('tailwindcss').Config} */
-const config = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
+  ],
+  prefix: "",
   theme: {
-    extend: {
+    container: {
+      center: true,
+      padding: "2rem",
       screens: {
-        xs: "475px",
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
+        "2xl": "1400px",
       },
-
-      fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
-      fontSize: {
-        medium: "1.5rem",
-        default: "1.2rem",
-        small: "1rem",
-        large: "4rem",
-        XLarge: "7rem",
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-      clipPath: {
-        ellipse: "ellipse(50% 50% at 85% 30%)",
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
-
-      fontWeight: {
-        hairline: 100, // Thin
-        thin: 100,
-        light: 200,
-        normal: 300, // Normal
-        medium: 400, // Regular
-        semibold: 500,
-        bold: 600,
-        extrabold: 700, // Bold
-        black: 800, // Extra Bold
-        extrablack: 900, // Black
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [],
-};
-
-export default config;
+  plugins: [require("tailwindcss-animate")],
+}
