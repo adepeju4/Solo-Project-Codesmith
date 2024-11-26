@@ -6,7 +6,7 @@
   "author": "Orefejo Adepeju",
   "license": "ISC",
   "scripts": {
-    "build": "concurrently \"node server/server.js\" \"vite\"",
+    "build": "vite build",
     "dev": "concurrently \"nodemon server/server.js\" \"vite\"",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
